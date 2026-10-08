@@ -9,12 +9,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build Application') {
             steps {
                 sh '''
@@ -37,6 +31,8 @@ pipeline {
                     echo "Running tests..."
 
                     . venv/bin/activate
+
+                    export PYTHONPATH="$WORKSPACE"
 
                     pytest -v
                 '''
