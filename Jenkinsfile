@@ -53,14 +53,15 @@ pipeline {
         }
 
         stage('Scan Docker Image') {
-            steps {
-                sh '''
-                    echo "Scanning Docker image..."
+          steps {
+            sh '''
+               echo "Scanning Docker image..."
 
-                    trivy image \
-                        --severity HIGH,CRITICAL \
-                        --exit-code 1 \
-                        ${DOCKER_IMAGE}:${IMAGE_TAG}
+               trivy image \
+                    --scanners vuln \
+                    --severity HIGH,CRITICAL \
+                    --exit-code 1 \
+                    ${DOCKER_IMAGE}:${IMAGE_TAG}
                 '''
             }
         }
